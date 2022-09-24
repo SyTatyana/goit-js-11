@@ -1,6 +1,6 @@
 import './sass/main.scss';
 import Notiflix from 'notiflix';
-import { fetchImagens } from './js/fetch-images';
+import { fetchImages } from './js/fetch-images';
 import { renderGallery } from './js/gallery-render';
 import { scroll } from './js/scroll';
 
@@ -22,11 +22,11 @@ function onSubmit(e) {
   name = input.value.trim();
   gallery.innerHTML = '';
 
-  fetchImagens(name, pageNumber)
+  fetchImages(name, pageNumber)
     .then(data => {
       console.log(data);
       if (!name) {
-        Notiflix.Notify.failure('Please, write something');
+        Notiflix.Notify.failure('There is nothing to search');
       } else if (data.hits.length === 0) {
         mistaceFunction();
       } else {
@@ -45,7 +45,7 @@ loadBtn.addEventListener('click', onLoadMore);
 
 function onLoadMore() {
   pageNumber += 1;
-  fetchImagens(name, pageNumber)
+  fetchImages(name, pageNumber)
     .then(data => {
       console.log(data);
       renderGallery(data.hits);
